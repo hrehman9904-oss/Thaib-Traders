@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Offer>
+@if (Model.Any())
+{
+    <div class="ticker">
+        <div class="ticker-track">
+            @for (int i = 0; i < 2; i++)
+            {
+                foreach (var o in Model)
+                {
+                    <span>🔥 @o.Title: @o.Text</span>
+                }
+            }
+        </div>
+    </div>
+}

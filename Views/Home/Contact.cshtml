@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    var storeName = Config["Store:Name"];
+    var phone1 = Config["Store:Phone1"];
+    var phone2 = Config["Store:Phone2"];
+    var email = Config["Store:Email"];
+    var address = Config["Store:Address"];
+    var mapsUrl = Config["Store:MapsUrl"];
+    var waNumber = Config["Store:WhatsApp"];
+}
+
+<section class="section">
+    <div class="head"><span class="eyebrow">Get in touch</span><h1 class="page-title">Contact Us</h1></div>
+    <div class="box">
+        <h3>@storeName</h3>
+        <p>Phone: <a href="tel:@phone1">@phone1</a> | <a href="tel:@phone2">@phone2</a></p>
+        <p>Email: <a href="mailto:@email">@email</a></p>
+        <p>Address: @address</p>
+        <p>Open daily: 8:00 AM - 10:00 PM</p>
+        <a class="btn btn-wa" href="https://wa.me/@waNumber" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        <a class="btn btn-red" href="@mapsUrl" target="_blank" rel="noopener">Get Directions</a>
+    </div>
+</section>

@@ -1,0 +1,27 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Name;
+    var img = string.IsNullOrEmpty(Model.ImageFileName)
+        ? "/images/placeholder.svg"
+        : "/uploads/products/" + Model.ImageFileName;
+    var msg = $"Hello, I would like to ask about \"{Model.Name}\" (Rs. {Model.Price:N0}). Is it available?";
+    var waNumber = Config["Store:WhatsApp"];
+    var wa = $"https://wa.me/{waNumber}?text={Uri.EscapeDataString(msg)}";
+}
+
+<section class="section">
+    <p><a asp-action="Index">&larr; Back to products</a></p>
+    <div class="detail">
+        <img class="detail-img" src="@img" alt="@Model.Name" />
+        <div>
+            <span class="cat">@Model.Category?.Name</span>
+            <h1 class="page-title">@Model.Name</h1>
+            <p class="price big">Rs. @Model.Price.ToString("N0")</p>
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p class="desc">@Model.Description</p>
+            }
+            <a class="btn btn-wa" href="@wa" target="_blank" rel="noopener">Contact on WhatsApp</a>
+        </div>
+    </div>
+</section>

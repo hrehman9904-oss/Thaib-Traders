@@ -1,0 +1,13 @@
+﻿@model SiteSetting
+@{
+    var photo = string.IsNullOrEmpty(Model.OwnerPhotoFileName)
+        ? "/images/owner.svg"
+        : "/uploads/site/" + Model.OwnerPhotoFileName;
+}
+<figure class="owner-card">
+    <img src="@photo" alt="Store owner" loading="lazy" />
+    <figcaption>
+        <b>Store Owner</b>
+        <span>Tahib Traders</span>
+    </figcaption>
+</figure>

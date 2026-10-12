@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "About";
+    var storeName = Config["Store:Name"];
+}
+
+<section class="section about">
+    @await Component.InvokeAsync("OwnerCard")
+    <div>
+        <span class="eyebrow">About us</span>
+        <h1 class="page-title">About @storeName</h1>
+        <p>@storeName serves Bhanywali, Sialkot and the surrounding villages with good products, honest prices and friendly service every day.</p>
+        <ul>
+            <li>Daily-use groceries and household items</li>
+            <li>Trusted brands at fair prices</li>
+            <li>Quick answers on WhatsApp</li>
+        </ul>
+    </div>
+</section>

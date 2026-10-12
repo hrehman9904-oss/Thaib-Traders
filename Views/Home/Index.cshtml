@@ -1,0 +1,133 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+    var waNumber = Config["Store:WhatsApp"];
+    var storeName = Config["Store:Name"];
+    var address = Config["Store:Address"];
+    var mapsUrl = Config["Store:MapsUrl"];
+
+    // Sample photos from Unsplash (free licence). Replace with your own shop photos later.
+    string Photo(string id, int width) => $"https://unsplash.com/photos/{id}/download?force=true&w={width}";
+    var gallery = new[]
+{
+        ("/images/store/store-1.jpg", "Our store"),
+        ("/images/store/store-2.jpg", "Fresh groceries"),
+        ("/images/store/store-3.jpg", "Daily essentials"),
+        ("/images/store/store-4.jpg", "Everything in one place")
+    };
+}
+
+<section class="hero" style="--hero-img:url('@Photo("2Vl1JZFmtOw", 1600)')">
+    <div class="hero-inner">
+        <span class="badge">Serving Sialkot &amp; nearby villages</span>
+        <h1>Everything your home needs, <em>under one roof</em></h1>
+        <p>Quality groceries, beverages, snacks, personal care and household items at fair prices.</p>
+        <div class="hero-actions">
+            <a class="btn btn-wa" href="https://wa.me/@waNumber" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <a class="btn btn-out" href="#products">Browse Products</a>
+        </div>
+    </div>
+</section>
+
+<div class="trust">
+    <div><b>Quality Products</b>Genuine brands</div>
+    <div><b>Fair Prices</b>Honest rates daily</div>
+    <div><b>Wide Range</b>Everything in one store</div>
+    <div><b>Easy Contact</b>Ask on WhatsApp</div>
+</div>
+
+@if (Model.Offers.Any())
+{
+    <section id="offers" class="section">
+        <div class="head reveal"><span class="eyebrow">Save more</span><h2>Special Offers</h2></div>
+        <div class="marquee">
+            <div class="offers">
+                @for (int i = 0; i < 2; i++)
+                {
+                    foreach (var o in Model.Offers)
+                    {
+                        <div class="offer">
+                            <span class="tag">@o.Tag</span>
+                            <h3>@o.Title</h3>
+                            <p>@o.Text</p>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<section class="section line">
+    <div class="wrap">
+        <div class="head reveal"><span class="eyebrow">Our store</span><h2>A Look Inside</h2></div>
+        <div class="gallery reveal">
+            @foreach (var g in gallery)
+            {
+                <figure>
+                    <img src="@g.Item1" alt="@g.Item2" loading="lazy"
+                         onerror="this.onerror=null;this.src='/images/placeholder.svg'" />
+                    <figcaption>@g.Item2</figcaption>
+                </figure>
+            }
+        </div>
+    </div>
+</section>
+<section id="products" class="section">
+    <div class="head reveal"><span class="eyebrow">Our shelves</span><h2>Shop by Category</h2></div>
+    <div class="chips">
+        <a class="chip active" asp-controller="Products" asp-action="Index">All</a>
+        @foreach (var c in Model.Categories)
+        {
+            <a class="chip" asp-controller="Products" asp-action="Index" asp-route-categoryId="@c.Id">@c.Name</a>
+        }
+    </div>
+
+    @if (Model.Products.Any())
+    {
+        <div class="grid">
+            @foreach (var p in Model.Products)
+            {
+                <partial name="_ProductCard" model="p" />
+            }
+        </div>
+        <p class="center-link">
+            <a class="btn btn-red" asp-controller="Products" asp-action="Index">View all products</a>
+        </p>
+    }
+    else
+    {
+        <p class="empty">Products will appear here soon.</p>
+    }
+</section>
+
+<section class="section line">
+    <div class="wrap about reveal">
+        @await Component.InvokeAsync("OwnerCard")
+        <div>
+            <span class="eyebrow">About us</span>
+            <h2>Your neighbourhood store you can trust</h2>
+            <p>@storeName serves Bhanywali, Sialkot and the surrounding villages with good products, honest prices and friendly service every day.</p>
+            <ul>
+                <li>Daily-use groceries and household items</li>
+                <li>Trusted brands at fair prices</li>
+                <li>Quick answers on WhatsApp</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="head reveal"><span class="eyebrow">Find us</span><h2>Visit Our Store</h2></div>
+    <div class="box">
+        <h3>@address</h3>
+        <p>Open daily: 8:00 AM - 10:00 PM</p>
+        <a class="btn btn-red" href="@mapsUrl" target="_blank" rel="noopener">Get Directions</a>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Have a question? Message us anytime</h2>
+    <p>Ask about prices, availability or offers. We reply on WhatsApp.</p>
+    <a class="btn btn-wa" href="https://wa.me/@waNumber" target="_blank" rel="noopener">Chat on WhatsApp</a>
+</section>

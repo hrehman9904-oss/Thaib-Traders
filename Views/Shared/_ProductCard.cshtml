@@ -1,0 +1,18 @@
+﻿@model Product
+@{
+    var msg = $"Hello, I would like to ask about \"{Model.Name}\" (Rs. {Model.Price:N0}). Is it available?";
+    var waNumber = Config["Store:WhatsApp"];
+    var wa = $"https://wa.me/{waNumber}?text={Uri.EscapeDataString(msg)}";
+    var img = string.IsNullOrEmpty(Model.ImageFileName)
+        ? "/images/placeholder.svg"
+        : "/uploads/products/" + Model.ImageFileName;
+}
+<article class="card">
+    <a class="thumb" asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@img" alt="@Model.Name" loading="lazy" />
+    </a>
+    <span class="cat">@Model.Category?.Name</span>
+    <h3>@Model.Name</h3>
+    <p class="price">Rs. @Model.Price.ToString("N0")</p>
+    <a class="btn btn-wa small" href="@wa" target="_blank" rel="noopener">Contact on WhatsApp</a>
+</article>

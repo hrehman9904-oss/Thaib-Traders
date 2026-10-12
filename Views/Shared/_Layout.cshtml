@@ -1,0 +1,75 @@
+﻿@{
+    var storeName = Config["Store:Name"];
+    var phone1 = Config["Store:Phone1"];
+    var phone2 = Config["Store:Phone2"];
+    var email = Config["Store:Email"];
+    var address = Config["Store:Address"];
+    var mapsUrl = Config["Store:MapsUrl"];
+    var waNumber = Config["Store:WhatsApp"];
+    var wa = $"https://wa.me/{waNumber}?text={Uri.EscapeDataString("Hello, I would like to know more about your store.")}";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Tahib Traders - your trusted general store in Bhanywali, Sialkot. Groceries, beverages, snacks, personal care and household items." />
+    <title>@ViewData["Title"] - @storeName</title>
+    <link rel="icon" type="image/png" href="~/images/logo.png" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="topbar">
+        <span>Open daily: 8:00 AM - 10:00 PM</span>
+        <a href="tel:@phone1">Call: @phone1</a>
+    </div>
+
+    <header class="header">
+        <a class="logo" asp-controller="Home" asp-action="Index">
+            <img class="logo-img" src="~/images/logo.png" asp-append-version="true" alt="@storeName logo" />
+            <span>@storeName</span>
+        </a>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+        <nav id="nav">
+            <a asp-controller="Home" asp-action="Index" asp-fragment="offers">Offers</a>
+            <a asp-controller="Products" asp-action="Index">Products</a>
+            <a asp-controller="Home" asp-action="About">About</a>
+            <a asp-controller="Home" asp-action="Contact">Contact</a>
+            <a class="nav-cta" href="@wa" target="_blank" rel="noopener">WhatsApp</a>
+        </nav>
+    </header>
+
+    @await Component.InvokeAsync("OffersTicker")
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>@storeName</h4>
+                <p>Quality groceries, beverages, snacks, personal care and household items at fair prices.</p>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>@phone1<br />@phone2<br />@email</p>
+            </div>
+            <div>
+                <h4>Visit us</h4>
+                <p>@address<br /><a href="@mapsUrl" target="_blank" rel="noopener">Get Directions</a></p>
+            </div>
+        </div>
+        <p class="copy">© @DateTime.Now.Year @storeName. All rights reserved.</p>
+    </footer>
+
+    <a class="wa-float" href="@wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp</a>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/password-toggle.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
