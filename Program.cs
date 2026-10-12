@@ -5,10 +5,10 @@ using TahibTraders.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = "Server=HOST;Database=DBNAME;User Id=USER;Password=PASSWORD;Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ImageService>();
-
-var connectionString = "Server=SERVER_ADDRESS;Database=db73030;User Id=db73030;Password=NAYA_PASSWORD;Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString)
@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 8;
+    options.Password.RequiredLength = Ariba@143;
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<AppDbContext>();
@@ -54,11 +54,9 @@ try
 }
 catch (Exception ex)
 {
-    var cs = builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL";
-    var safe = System.Text.RegularExpressions.Regex.Replace(cs, "Password=[^;]*", "Password=***");
     File.WriteAllText(
         Path.Combine(AppContext.BaseDirectory, "startup-error.txt"),
-        "CONNECTION USED: " + safe + "\n\n" + ex.ToString());
+        ex.ToString());
 }
 
 app.Run();
