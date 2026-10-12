@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = Ariba@143;
+    options.Password.RequiredLength = 15;
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<AppDbContext>();
