@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+    <aside class="side">
+        <div class="brand">Tahib Traders<small>Admin panel</small></div>
+        <nav>
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+            <a asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
+            <a asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
+            <a asp-area="Admin" asp-controller="Offers" asp-action="Index">Offers</a>
+            <a asp-area="Admin" asp-controller="OwnerPhoto" asp-action="Index">Owner picture</a>
+            <a asp-area="Admin" asp-controller="Password" asp-action="Index">Change password</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" target="_blank">View website</a>
+        </nav>
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-out logout">Log out</button>
+        </form>
+    </aside>
+
+    <main class="main">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert ok">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert bad">@TempData["Error"]</div>
+        }
+        @RenderBody()
+    </main>
+    <script src="~/js/password-toggle.js" asp-append-version="true"></script>
+</body>
+
+</html>

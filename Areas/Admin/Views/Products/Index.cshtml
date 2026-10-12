@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="bar">
+    <h1>Products</h1>
+    <a class="btn btn-red" asp-action="Create">+ Add product</a>
+</div>
+
+<form method="get" class="searchbar">
+    <input type="search" name="q" value="@ViewData["Query"]" placeholder="Search by name..." />
+    <button type="submit" class="btn btn-out sm">Search</button>
+</form>
+
+@if (!Model.Any())
+{
+    <p class="hint">No products yet. Click "Add product" to create the first one.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>Photo</th><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                var img = string.IsNullOrEmpty(p.ImageFileName) ? "/images/placeholder.svg" : "/uploads/products/" + p.ImageFileName;
+                <tr>
+                    <td><img class="thumb-sm" src="@img" alt="@p.Name" /></td>
+                    <td>@p.Name</td>
+                    <td>@p.Category?.Name</td>
+                    <td>Rs. @p.Price.ToString("N0")</td>
+                    <td><span class="@(p.IsActive ? "pill on" : "pill off")">@(p.IsActive ? "Visible" : "Hidden")</span></td>
+                    <td class="actions">
+                        <a class="btn btn-out sm" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                        <form asp-action="ToggleActive" asp-route-id="@p.Id" method="post">
+                            <button type="submit" class="btn btn-out sm">@(p.IsActive ? "Hide" : "Show")</button>
+                        </form>
+                        <form asp-action="Delete" asp-route-id="@p.Id" method="post"
+                              onsubmit="return confirm('Delete this product permanently?');">
+                            <button type="submit" class="btn btn-danger sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

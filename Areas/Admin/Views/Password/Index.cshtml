@@ -1,0 +1,24 @@
+﻿@model ChangePasswordViewModel
+@{
+    ViewData["Title"] = "Change password";
+}
+
+<h1>Change password</h1>
+<form asp-action="Index" method="post" class="form">
+    <div asp-validation-summary="ModelOnly" class="form-error"></div>
+
+    <label asp-for="CurrentPassword"></label>
+    <input asp-for="CurrentPassword" type="password" autocomplete="current-password" />
+    <span asp-validation-for="CurrentPassword" class="field-error"></span>
+
+    <label asp-for="NewPassword"></label>
+    <input asp-for="NewPassword" type="password" autocomplete="new-password" />
+    <span asp-validation-for="NewPassword" class="field-error"></span>
+    <p class="hint">At least 8 characters, with a capital letter, a small letter and a number.</p>
+
+    <label asp-for="ConfirmPassword"></label>
+    <input asp-for="ConfirmPassword" type="password" autocomplete="new-password" />
+    <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+
+    <button type="submit" class="btn btn-red">Change password</button>
+</form>

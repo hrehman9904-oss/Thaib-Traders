@@ -1,0 +1,36 @@
+﻿@model ProductFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="form-error"></div>
+
+<label asp-for="Name"></label>
+<input asp-for="Name" type="text" maxlength="120" />
+<span asp-validation-for="Name" class="field-error"></span>
+
+<label asp-for="CategoryId"></label>
+<select asp-for="CategoryId" asp-items="Model.Categories">
+    <option value="">-- Select category --</option>
+</select>
+<span asp-validation-for="CategoryId" class="field-error"></span>
+
+<label asp-for="Price">Price (Rs.)</label>
+<input asp-for="Price" type="number" step="any" min="0" />
+<span asp-validation-for="Price" class="field-error"></span>
+
+<label asp-for="Description">Description (optional)</label>
+<textarea asp-for="Description" rows="3" maxlength="500"></textarea>
+<span asp-validation-for="Description" class="field-error"></span>
+
+<label asp-for="Image">Product picture (JPG, PNG or WEBP, max 5 MB)</label>
+@if (!string.IsNullOrEmpty(Model.ExistingImageFileName))
+{
+    <img class="preview" src="/uploads/products/@Model.ExistingImageFileName" alt="Current picture" />
+    <label class="check"><input asp-for="RemoveImage" /> Remove current picture</label>
+    <p class="hint">Choose a new file below to replace the current picture.</p>
+}
+<input asp-for="Image" type="file" accept="image/jpeg,image/png,image/webp" />
+<span asp-validation-for="Image" class="field-error"></span>
+
+<label class="check"><input asp-for="IsActive" /> Show on website</label>
+
+<button type="submit" class="btn btn-red">Save</button>
+<a class="btn btn-out" asp-action="Index">Cancel</a>

@@ -1,0 +1,9 @@
+﻿@model Offer
+@{
+    ViewData["Title"] = "Edit offer";
+}
+
+<h1>Edit offer</h1>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="form">
+    <partial name="_OfferForm" />
+</form>

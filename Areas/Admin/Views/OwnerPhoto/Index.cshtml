@@ -1,0 +1,21 @@
+﻿@model OwnerPhotoViewModel
+@{
+    ViewData["Title"] = "Owner picture";
+}
+
+<h1>Owner picture</h1>
+<form asp-action="Index" method="post" enctype="multipart/form-data" class="form">
+    <label asp-for="Photo">Choose a picture (JPG, PNG or WEBP, max 5 MB)</label>
+
+    @if (!string.IsNullOrEmpty(Model.ExistingPhoto))
+    {
+        <img class="preview" src="/uploads/site/@Model.ExistingPhoto" alt="Current owner picture" />
+        <label class="check"><input asp-for="RemovePhoto" /> Remove current picture</label>
+    }
+
+    <input asp-for="Photo" type="file" accept="image/jpeg,image/png,image/webp" />
+    <span asp-validation-for="Photo" class="field-error"></span>
+    <p class="hint">Best: a portrait photo, about 800 x 1000 pixels. It appears in the About section of the website.</p>
+
+    <button type="submit" class="btn btn-red">Save picture</button>
+</form>

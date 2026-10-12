@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Offer>
+@{
+    ViewData["Title"] = "Offers";
+}
+
+<div class="bar">
+    <h1>Offers</h1>
+    <a class="btn btn-red" asp-action="Create">+ Add offer</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p class="hint">No offers yet. Active offers appear in the red moving bar on the website.</p>
+}
+else
+{
+    <table class="table">
+        <thead><tr><th>Label</th><th>Title</th><th>Details</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Tag</td>
+                    <td>@o.Title</td>
+                    <td>@o.Text</td>
+                    <td><span class="@(o.IsActive ? "pill on" : "pill off")">@(o.IsActive ? "Visible" : "Hidden")</span></td>
+                    <td class="actions">
+                        <a class="btn btn-out sm" asp-action="Edit" asp-route-id="@o.Id">Edit</a>
+                        <form asp-action="ToggleActive" asp-route-id="@o.Id" method="post">
+                            <button type="submit" class="btn btn-out sm">@(o.IsActive ? "Hide" : "Show")</button>
+                        </form>
+                        <form asp-action="Delete" asp-route-id="@o.Id" method="post"
+                              onsubmit="return confirm('Delete this offer?');">
+                            <button type="submit" class="btn btn-danger sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

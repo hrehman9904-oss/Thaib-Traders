@@ -1,0 +1,20 @@
+﻿@model Offer
+
+<div asp-validation-summary="ModelOnly" class="form-error"></div>
+
+<label asp-for="Tag">Label (e.g. This week, Limited, New)</label>
+<input asp-for="Tag" type="text" maxlength="20" />
+<span asp-validation-for="Tag" class="field-error"></span>
+
+<label asp-for="Title">Offer title</label>
+<input asp-for="Title" type="text" maxlength="80" />
+<span asp-validation-for="Title" class="field-error"></span>
+
+<label asp-for="Text">Offer details (e.g. Special price: Rs. 1,650)</label>
+<input asp-for="Text" type="text" maxlength="160" />
+<span asp-validation-for="Text" class="field-error"></span>
+
+<label class="check"><input asp-for="IsActive" /> Show on website</label>
+
+<button type="submit" class="btn btn-red">Save</button>
+<a class="btn btn-out" asp-action="Index">Cancel</a>
