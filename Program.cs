@@ -4,15 +4,12 @@ using TahibTraders.Services;
 using TahibTraders.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var connectionString = "Server=db73030.databaseasp.net;Database=db73030;User Id=db73030;Password=APNA_PASSWORD;Encrypt=False;MultipleActiveResultSets=True;";
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ImageService>();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+    throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString)
-);
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
