@@ -1,10 +1,13 @@
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TahibTraders.Services;
 using TahibTraders.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 if (string.IsNullOrWhiteSpace(connectionString))
     throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
@@ -18,21 +21,31 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<AppDbContext>();
 
+// Fix: Register authorization services before builder.Build()
+builder.Services.AddAuthorization();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/Login";
 });
 
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
-app.UseDeveloperExceptionPage();
+// Temporary error details; disable for production after testing
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
-app.MapGet("/ping", () => "NEW CODE v3 - DB host: db73030.databaseasp.net");
+app.MapGet("/ping", () => "NEW CODE v4 - Application running");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
