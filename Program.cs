@@ -9,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Load the production database configuration explicitly.
 builder.Configuration.AddJsonFile(
     "appsettings.Production.json",
-    optional: false,
+    optional: true,
     reloadOnChange: false
+);
 );
 
 builder.Services.AddControllersWithViews();
