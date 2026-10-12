@@ -5,7 +5,7 @@ using TahibTraders.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = "Server=HOST;Database=DBNAME;User Id=USER;Password=PASSWORD;Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
+var connectionString = "Server=db73030.databaseasp.net;Database=db73030;User Id=db73030;Password=APNA_PASSWORD;Encrypt=False;MultipleActiveResultSets=True;";
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ImageService>();
@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 15;
+    options.Password.RequiredLength = 8;
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<AppDbContext>();
@@ -30,6 +30,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
+
+app.MapGet("/ping", () => "NEW CODE v3 - DB host: db73030.databaseasp.net");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
