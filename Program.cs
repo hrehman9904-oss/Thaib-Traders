@@ -3,6 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using TahibTraders.Services;
 using TahibTraders.Data;
 
+AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+{
+    File.WriteAllText(
+        Path.Combine(AppContext.BaseDirectory, "startup-error.txt"),
+        e.ExceptionObject.ToString());
+};
 var builder = WebApplication.CreateBuilder(args);
 
 // Load the production database configuration explicitly.
