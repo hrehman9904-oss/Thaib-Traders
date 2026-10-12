@@ -4,6 +4,7 @@ using TahibTraders.Services;
 using TahibTraders.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.Production.json", optional: true, reloadOnChange: true);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ImageService>();
