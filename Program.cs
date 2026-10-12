@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TahibTraders.Services;
@@ -11,7 +10,6 @@ builder.Configuration.AddJsonFile(
     "appsettings.Production.json",
     optional: true,
     reloadOnChange: false
-);
 );
 
 builder.Services.AddControllersWithViews();
