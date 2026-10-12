@@ -9,9 +9,9 @@ AppDomain.CurrentDomain.UnhandledException += (s, e) =>
         Path.Combine(AppContext.BaseDirectory, "startup-error.txt"),
         e.ExceptionObject.ToString());
 };
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Load the production database configuration explicitly.
 builder.Configuration.AddJsonFile(
     "appsettings.Production.json",
     optional: true,
@@ -64,9 +64,16 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
 
-using (var scope = app.Services.CreateScope())
+try
 {
+    using var scope = app.Services.CreateScope();
     await DbSeeder.SeedAsync(scope.ServiceProvider);
+}
+catch (Exception ex)
+{
+    File.WriteAllText(
+        Path.Combine(AppContext.BaseDirectory, "startup-error.txt"),
+        ex.ToString());
 }
 
 app.Run();
